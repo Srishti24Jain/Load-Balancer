@@ -13,17 +13,17 @@ go run main.go
 --data-raw '{
  "backends": [
   {
-   "url": "https://httpstat.us/200"
+   "url": "https://www.7timer.info/bin/astro.php?lon=113.2&lat=23.1&ac=0&unit=metric&output=json&tzshift=0"
   },
   {
-   "url": "http://duckduckgo.com"
+   "url": "https://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=xml"
   },
   {
-   "url": "http://www.google.com"
+   "url": "http://www.7timer.info/bin/astro.php?lon=113.17&lat=23.09&ac=0&lang=en&unit=metric&output=internal&tzshift=0"
   }
  ]
-
 }'
+
 ```
 # Curl for redirecting through proxy
 ```  

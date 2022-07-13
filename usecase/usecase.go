@@ -3,7 +3,6 @@ package usecase
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net"
@@ -11,7 +10,6 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"os"
-	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -124,12 +122,8 @@ func (l *LoadBalancer) NextIndex() int {
 func proxyUrl(serverUrl *url.URL) *httputil.ReverseProxy {
 	proxy := httputil.NewSingleHostReverseProxy(serverUrl)
 	proxy.ErrorHandler = func(writer http.ResponseWriter, request *http.Request, e error) {
-
-		if strings.Contains(serverUrl.String(), ":") {
-			writer.WriteHeader(http.StatusOK)
-			fmt.Fprintf(writer, "Backend url:%v\n", serverUrl)
-			fmt.Fprintf(writer, "Response header:%v\n", request.Header)
-		}
+		request.URL.Host = serverUrl.Host
+		request.URL.Scheme = serverUrl.Scheme
 
 		log.Printf("Error[%s] %s\n", serverUrl.Host, e.Error())
 		retries := GetRetryFromContext(request)
