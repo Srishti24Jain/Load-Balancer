@@ -1,13 +1,1 @@
-{
- "backends": [
-  {
-   "url": "https://httpstat.us/200"
-  },
-  {
-   "url": "http://duckduckgo.com"
-  },
-  {
-   "url": "http://www.google.com"
-  }
- ]
-}
+
