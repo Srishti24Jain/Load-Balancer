@@ -90,6 +90,14 @@ func NewLoadBalancer(port string, servers []domain.Server) *LoadBalancer {
 func (l *LoadBalancer) ServeProxy(rw http.ResponseWriter, req *http.Request) {
 	targetServer := l.GetNextPeer()
 
+	rw.Header().Set("Content-Type", "application/json; charset=utf-8")
+	rw.Header().Set("X-Forwarded-Host", req.Host)
+	rw.Header().Set("X-Origin-Host", targetServer.URL.Host)
+
+	req.URL.Host = targetServer.URL.Host
+	req.URL.Scheme = targetServer.URL.Scheme
+	req.Host = targetServer.URL.Host
+	req.URL.Path = targetServer.URL.Path
 	targetServer.Serve(rw, req)
 }
 
@@ -121,10 +129,8 @@ func (l *LoadBalancer) NextIndex() int {
 
 func proxyUrl(serverUrl *url.URL) *httputil.ReverseProxy {
 	proxy := httputil.NewSingleHostReverseProxy(serverUrl)
-	proxy.ErrorHandler = func(writer http.ResponseWriter, request *http.Request, e error) {
-		request.URL.Host = serverUrl.Host
-		request.URL.Scheme = serverUrl.Scheme
 
+	proxy.ErrorHandler = func(writer http.ResponseWriter, request *http.Request, e error) {
 		log.Printf("Error[%s] %s\n", serverUrl.Host, e.Error())
 		retries := GetRetryFromContext(request)
 		if retries < 3 {
