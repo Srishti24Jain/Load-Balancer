@@ -12,16 +12,16 @@ go run main.go
 --header 'Content-Type: application/json' \
 --data-raw '{
  "backends": [
-  {
-   "url": "https://www.7timer.info/bin/astro.php?lon=113.2&lat=23.1&ac=0&unit=metric&output=json&tzshift=0"
-  },
-  {
-   "url": "https://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=xml"
-  },
-  {
-   "url": "http://www.7timer.info/bin/astro.php?lon=113.17&lat=23.09&ac=0&lang=en&unit=metric&output=internal&tzshift=0"
-  }
- ]
+    {
+      "url": "http://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita"
+    },
+    {
+      "url": "http://www.reddit.com/r/Wallstreetbets/top.json?limit=10&t=year"
+    },
+    {
+      "url": "http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=xml"
+    }
+  ]
 }'
 
 ```
